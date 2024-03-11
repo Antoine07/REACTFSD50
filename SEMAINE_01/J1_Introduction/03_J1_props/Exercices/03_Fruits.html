@@ -13,6 +13,11 @@
         .heading {
             color: purple;
         }
+
+        .main {
+            background-color: beige;
+            margin: 20px;
+        }
     </style>
 
 
@@ -25,14 +30,14 @@
 
     <script type="text/babel">
         // point de montage de l'arbre de React
-        const root =  document.getElementById('root');
+        const root = document.getElementById('root');
         // les données
         const products = [
             { prices: [1.2, 1.1, 1.0], name: "apples" },
             { prices: [1.8, 1.0, 1.9], name: "oranges" },
             { prices: [1.0, 0.9, 1.1], name: "bananas" },
             { prices: [], name: "raspberry" },
-            {  name: "tomate" },
+            { name: "tomate" },
         ];
 
         // une fonctionnalité
@@ -57,8 +62,8 @@
                         <ul>
                             {prices.map((price, i) => <li key={i} >{price}</li>)}
                         </ul>
-                    ) }
-                    {prices && <p>Average: {average(prices)} </p> }
+                    )}
+                    {prices && <p>Average: {average(prices)} </p>}
                 </React.Fragment>
             )
         }
@@ -67,13 +72,31 @@
             const { fruits } = props;
 
             return (
-                <div >
+                <Layout>
                     <ul>
                         {fruits.map((fruit, i) => <li key={i}><Fruit name={fruit.name} prices={fruit.prices} /></li>)}
                     </ul>
-                </div>
+                </Layout>
             )
         };
+
+        // layout permet de structurer une mise en page commune à toutes les pages
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    <nav>
+                        <ul>
+                            <li>Home</li>
+                        </ul>
+                    </nav>
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
 
         // Rendu dans le DOM
         ReactDOM.createRoot(root).render(<App fruits={products} />);
