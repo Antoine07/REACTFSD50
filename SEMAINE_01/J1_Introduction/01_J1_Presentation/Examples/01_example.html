@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+    // Rendu dans le DOM de deux components hiérarchiques
+        ReactDOM.createRoot(
+            // identifiant root permettant de placer l'élément dans le DOM
+            document.getElementById('root')
+        )
+        .render(
+            // composant <div style={ 'style': { 'color': 'red' } >
+            // <h1>Oh Hellon React ! </h1>
+            // </div>
+            React.createElement('div', { 'style': { 'color': 'red' } },
+                // définit un élément enfant à l'élément div
+                React.createElement('h1', null, "Oh Hello React !")
+            ),
+        );
+    </script>
+</body>
+</html>
