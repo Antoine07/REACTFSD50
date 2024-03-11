@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+
+        .main {
+            background-color: beige;
+            margin: 20px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- <script>alert('XSS')</script> -->
+
+    <script type="text/babel">
+        // point de montage de l'arbre de React
+        const root = document.getElementById('root');
+      
+        function Clock(props) {
+            let timer = new Date;
+
+            // le rendu n'est pas fait car React fonctionne avec un DOM virtuel et des méthodes spécifiques pour rafraichir le rendu des composants 
+            // setInterval(() => {
+            //     timer = new Date;
+            //     console.log(timer.toLocaleTimeString())
+            // }, 1000)
+
+            return (
+                <Layout>
+                    <p>Horologe: {timer.toLocaleTimeString()} </p>
+                </Layout>
+            )
+        };
+
+        // layout permet de structurer une mise en page commune à toutes les pages
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    <nav>
+                        <ul>
+                            <li>Home</li>
+                        </ul>
+                    </nav>
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
+
+        // Rendu dans le DOM
+       const mainRoot =  ReactDOM.createRoot(root);
+       setInterval( () => mainRoot.render(<Clock  />) , 1000 ) 
+
+    </script>
+</body>
+
+</html>
