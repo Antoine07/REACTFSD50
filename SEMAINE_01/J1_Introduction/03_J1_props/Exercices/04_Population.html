@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+
+        .main {
+            background-color: beige;
+            margin: 20px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- <script>alert('XSS')</script> -->
+
+    <script type="text/babel">
+        // point de montage de l'arbre de React
+        const root = document.getElementById('root');
+        // les données
+        const populations = [
+            { "id": 0, "name": "Alan" },
+            { "id": 1, "name": "Albert" },
+            { "id": 2, "name": "Jhon" },
+            { "id": 3, "name": "Brice" },
+            { "id": 4, "name": "Alexendra" },
+            { "id": 5, "name": "Brad" },
+            { "id": 6, "name": "Carl" },
+            { "id": 7, "name": "Dallas" },
+            { "id": 8, "name": "Dennis" },
+            { "id": 9, "name": "Edgar" },
+            { "id": 10, "name": "Erika" },
+            { "id": 11, "name": "Isaac" },
+            { "id": 12, "name": "Ian" }
+        ]
+
+        const copyPopulations = populations => {
+
+            // map retourne un nouveau tableau et chaque littéral est copié dans un nouvel littéral et retourné
+            return populations.map(pop => ({...pop}) )
+        }
+
+
+        // assignation par décomposition voir le composant le parent
+        const Person = ({ name }) => {
+
+            // React.Fragment crée un noeud virtuel (pas d'ajout d'HTML) permettant de monter les éléments dans le DOM
+            return (
+                <React.Fragment>
+                    <p>Name: {name} - {name.length} </p>
+                  
+                </React.Fragment>
+            )
+        }
+
+        function App(props) {
+            const { populations } = props;
+
+            const cPopulations = copyPopulations(populations)
+
+            cPopulations.sort((p1, p2) => p1.name.length - p2.name.length)
+
+            return (
+                <Layout>
+                    <ul>
+                        {cPopulations.map((pop, i) => <li key={i}><Person name={pop.name} /></li>)}
+                    </ul>
+                </Layout>
+            )
+        };
+
+        // layout permet de structurer une mise en page commune à toutes les pages
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    <nav>
+                        <ul>
+                            <li>Home</li>
+                        </ul>
+                    </nav>
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
+
+        // Rendu dans le DOM
+        ReactDOM.createRoot(root).render(<App populations={populations} />);
+
+        console.log(populations)
+    </script>
+</body>
+
+</html>
