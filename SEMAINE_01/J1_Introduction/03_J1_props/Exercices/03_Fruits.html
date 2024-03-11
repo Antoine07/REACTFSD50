@@ -24,14 +24,18 @@
     <!-- <script>alert('XSS')</script> -->
 
     <script type="text/babel">
-
+        // point de montage de l'arbre de React
+        const root =  document.getElementById('root');
+        // les données
         const products = [
             { prices: [1.2, 1.1, 1.0], name: "apples" },
             { prices: [1.8, 1.0, 1.9], name: "oranges" },
             { prices: [1.0, 0.9, 1.1], name: "bananas" },
             { prices: [], name: "raspberry" },
+            {  name: "tomate" },
         ];
 
+        // une fonctionnalité
         const average = (notes, precision = 10) => {
             if (notes && notes.length > 0) {
                 const average = notes.reduce((acc, curr) => parseFloat(acc) + parseFloat(curr), 0) / notes.length;
@@ -42,30 +46,32 @@
             return "Aucune note";
         }
 
-        // composant
-        const Fruit = () => {
+        // assignation par décomposition voir le composant le parent
+        const Fruit = ({ name, prices }) => {
 
+            // React.Fragment crée un noeud virtuel (pas d'ajout d'HTML) permettant de monter les éléments dans le DOM
             return (
-                <p style={{ color: 'black' }}>
-
-                </p>
+                <React.Fragment>
+                    <p>Name: {name} </p>
+                    {prices && <p>Average: {average(prices)} </p> }
+                </React.Fragment>
             )
         }
 
         function App(props) {
-            const { students } = props;
+            const { fruits } = props;
 
             return (
                 <div >
-
+                    <ul>
+                        {fruits.map((fruit, i) => <li key={i}><Fruit name={fruit.name} prices={fruit.prices} /></li>)}
+                    </ul>
                 </div>
             )
         };
 
         // Rendu dans le DOM
-        ReactDOM.createRoot(document.getElementById('root')).render(
-            <App fruits={products} />
-        );
+        ReactDOM.createRoot(root).render(<App fruits={products} />);
     </script>
 </body>
 
