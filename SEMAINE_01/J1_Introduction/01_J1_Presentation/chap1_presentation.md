@@ -6,7 +6,7 @@ React est une librairie JS développée par Facebook, utilisée pour créer des 
 
 L'approche de React est donc de type Component. La librairie est déclarative. Il encapsule les propriétés pour éviter les effets de bord. React n'étant pas au sens propre un Framework il n'impose pas une structuration précise pour le développement de l'application. Nous utiliserons cependant dans le cours un programme (sous forme de package NPM) permettant de construire un squelette applicatif qui donnera une structuration d'un projet React.
 
-Au début, on utilisait le programme `vite js`, qui est toutefois assez lent à l'exécution.
+Au début, on utilisait le programme `create-react app`, qui est toutefois assez lent à l'exécution.
 Depuis quelques temps maintenant, c'est plutôt le programme **[Vite](https://vitejs.dev/)** qui est recommandé !
 
 ## DOM virtuel
