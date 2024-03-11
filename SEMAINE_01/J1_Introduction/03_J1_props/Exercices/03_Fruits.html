@@ -53,6 +53,11 @@
             return (
                 <React.Fragment>
                     <p>Name: {name} </p>
+                    {prices && (
+                        <ul>
+                            {prices.map((price, i) => <li key={i} >{price}</li>)}
+                        </ul>
+                    ) }
                     {prices && <p>Average: {average(prices)} </p> }
                 </React.Fragment>
             )
