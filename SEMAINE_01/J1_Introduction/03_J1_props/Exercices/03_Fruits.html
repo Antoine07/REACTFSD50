@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- <script>alert('XSS')</script> -->
+
+    <script type="text/babel">
+
+        const products = [
+            { prices: [1.2, 1.1, 1.0], name: "apples" },
+            { prices: [1.8, 1.0, 1.9], name: "oranges" },
+            { prices: [1.0, 0.9, 1.1], name: "bananas" },
+            { prices: [], name: "raspberry" },
+        ];
+
+        const average = (notes, precision = 10) => {
+            if (notes && notes.length > 0) {
+                const average = notes.reduce((acc, curr) => parseFloat(acc) + parseFloat(curr), 0) / notes.length;
+
+                return Math.round(average * precision) / precision;
+            }
+
+            return "Aucune note";
+        }
+
+        // composant
+        const Fruit = () => {
+
+            return (
+                <p style={{ color: 'black' }}>
+
+                </p>
+            )
+        }
+
+        function App(props) {
+            const { students } = props;
+
+            return (
+                <div >
+
+                </div>
+            )
+        };
+
+        // Rendu dans le DOM
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <App fruits={products} />
+        );
+    </script>
+</body>
+
+</html>
