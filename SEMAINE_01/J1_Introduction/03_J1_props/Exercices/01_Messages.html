@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- <script>alert('XSS')</script> -->
+
+    <script type="text/babel">
+
+        // composant
+        const Message = ({m})  => <span style={{color: 'orange'}}>{m}</span> 
+
+        // composant
+        function Messages({messages}) {
+
+            return (
+                <ul>
+                    { messages.map((m, i) => <li key={i}><Message m={m.message} /></li>)}
+                </ul>
+            )
+        }
+
+        // composant racine
+        function App(props) {
+            const MESSAGES = [
+                { message: "React JS" },
+                { message: "React Native" },
+                { message: "Angular" },
+                { message: "Symfony" },
+                { message: "MongoDB" },
+            ];
+
+            return (
+                <div >
+                    <Messages messages={MESSAGES} />
+                </div>
+            )
+        }
+        // Rendu dans le DOM
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <App title="Hello React" message="Enjoy !" />
+        );
+    </script>
+</body>
+
+</html>
