@@ -86,15 +86,10 @@ class TestState extends React.Component {
 ReactDOM.createRoot(document.getElementById("root")).render(<TestState />);
 ```
 
-## 01 Exercice Clock setinterval
-
-Ré-implémentez l'horloge précédente que nous avons vue dans le chapitre sur les props, cette fois utilisez un **state** pour gérer le temps qui passe (h/m/s).
-
----
 
 ## Approche fonctionnelle
 
-Pour définir un state également en ayant une approche fonctionnelle, il faudra faire appel à un Hook : useState
+:rocket: Pour définir un state également en ayant une approche fonctionnelle, il faudra faire appel à un Hook : useState
 
 ```jsx
 const Clock = () => {
@@ -111,8 +106,45 @@ const Clock = () => {
 };
 ```
 
-## 02 Approche fonction avec un Hook
+## 02 Cats
 
-1. En utilisant le Hook useState définissez un compteur qui s'incrémente toutes les secondes.
 
-2. Réalisez maintenant un compteur cyclique de période 10 (modulo 10 pour le counteur).
+1. Affichez le nom de chaque chat avec la première lettre dans une coleur à chaque fois différentes, pour réaliser cette fonction créez un bouton permettant de modifier la couleur.
+
+
+Remarque aidez vous de l'exemple ci-dessous.
+
+```html
+<script type="text/babel">
+  function App(props){
+    const [color, setColor] = React.useState('')
+
+    const handleColor = e => {
+      // déclencher la modification de l'état de color au click
+      setColor('red')
+    }
+
+    return (
+      <div>
+        <p style={ { color : color }}>Name du chat </p>
+        <button onClick={handleColor} > Change color </button>
+      </div>
+    )
+  }
+<script>
+```
+
+```js
+const catsData = [
+  { name: 'Whiskers', age: 3, color: 'Gray and White' },
+  { name: 'Luna', age: 2, color: 'Black' },
+  { name: 'Simba', age: 4, color: 'Orange' },
+  { name: 'Midnight', age: 1, color: 'Black' },
+  { name: 'Bella', age: 5, color: 'Tabby' },
+  { name: 'Gizmo', age: 2, color: 'Gray' },
+  { name: 'Nala', age: 3, color: 'Beige' },
+  { name: 'Oliver', age: 4, color: 'White and Brown' },
+  { name: 'Cleo', age: 2, color: 'Calico' },
+  { name: 'Max', age: 6, color: 'Tabby' }
+];
+```

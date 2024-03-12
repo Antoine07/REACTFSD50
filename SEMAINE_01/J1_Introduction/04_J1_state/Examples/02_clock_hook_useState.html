@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+
+        .main {
+            background-color: beige;
+            margin: 20px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const root = document.getElementById('root');
+      
+        function Clock(props) {
+            // Hook qui permet de modifier une variable de type state avec un re-render
+            const [timer, setTimer] = React.useState(new Date)
+
+            // le rendu n'est pas fait car React fonctionne avec un DOM virtuel et des méthodes spécifiques pour rafraichir le rendu des composants 
+            setTimeout(() => {
+                // modifie l'état du state timer => React si l'état de la variable change exécute un re-render
+                setTimer(new Date)
+            }, 1000)
+
+            return (
+                <Layout>
+                    <p>Horologe: {timer.toLocaleTimeString()} </p>
+                </Layout>
+            )
+        };
+
+        // layout permet de structurer une mise en page commune à toutes les pages
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    <nav>
+                        <ul>
+                            <li>Home</li>
+                        </ul>
+                    </nav>
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
+
+        // Rendu dans le DOM
+       ReactDOM.createRoot(root).render(<Clock  />) 
+
+    </script>
+</body>
+
+</html>
