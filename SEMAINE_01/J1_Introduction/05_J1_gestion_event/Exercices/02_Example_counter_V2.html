@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+
+        .main {
+            margin: 20px;
+        }
+
+        .counter {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+        const TIME = 1000
+
+        const Counter = ({ step, modulo }) => {
+            // deux states pour gérer mon compteur
+            const [count, setCount] = React.useState(0)
+            const [status, setStatus] = React.useState(false)
+
+            const handleClick = e => setStatus(!status)
+
+            // je déclenche mon compteur si status est vrai, un render => un autre et donc un autre setTimeout, etc
+            if (status)  setTimeout(() => {
+                setCount( modulo ?  (count + (step || 1))  % modulo : (count +  (step || 1) ))
+            }, TIME)
+
+            return (
+                <React.Fragment>
+                    <p>Count: <span className="counter">{count}</span> - with step: {step} </p>
+                    <p><button onClick={handleClick}>{status ? 'start' : 'stop'}</button></p>
+                </React.Fragment>
+            )
+        }
+
+        function App(props) {
+
+            return (
+                <Layout>
+                    {/* composants <=> modulables */}
+                    <Counter step={1} />
+                    <Counter step={2} />
+                    <Counter step={1} modulo={5} />
+                </Layout>
+            )
+        }
+
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    <nav>
+                        <ul>
+                            <li>Home</li>
+                        </ul>
+                    </nav>
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
+
+        // Rendu dans le DOM
+        ReactDOM.createRoot(root).render(
+            <App />
+        );
+    </script>
+</body>
+
+</html>
