@@ -24,7 +24,6 @@
         }
     </style>
 
-
 </head>
 
 <body>
@@ -67,14 +66,15 @@
 
             const handleColor = e => {
                 // Voir la documentation en gros cela mélange le tableau car le signe change à chaque appel de la callback
-                colors.sort( _ => Math.random() - .5 )
+                colors.sort(_ => Math.random() - .5)
                 setColor(colors[0])
             }
 
             return (
                 <Layout>
+                    <p>Age max : {props.ageMax} age min: {props.ageMin} </p>
                     <p><button onClick={handleColor}>change color first name cat</button></p>
-                    {props.cats.map((cat, i) => <Cat name={cat.name} colorCat={cat.color} color={color} />)}
+                    {props.cats.map((cat, i) => <Cat key={i} name={cat.name} colorCat={cat.color} color={color} />)}
                 </Layout>
             )
         }
@@ -97,7 +97,11 @@
         }
 
         // Rendu dans le DOM
-        ReactDOM.createRoot(root).render(<App cats={catsData} />)
+        ReactDOM.createRoot(root).render(<App
+            cats={catsData}
+            ageMax={Math.max(...catsData.map(c => c.age))}
+            ageMin={Math.min(...catsData.map(c => c.age))}
+        />)
 
     </script>
 </body>
