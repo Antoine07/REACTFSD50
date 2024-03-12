@@ -9,7 +9,9 @@ Attention les **événements** dans **React** (similaires aux événements du DO
 </button>
 ```
 
-En React vous ne pouvez pas retourner un false pour empêcher un comportement par défaut dans élément HTML. Vous devez explicitement l'écrire avec **preventDefault**, voyez l'exemple qui suit :
+:pill: En React vous ne pouvez pas retourner un false pour empêcher un comportement par défaut dans élément HTML. 
+
+Vous devez explicitement l'écrire avec **preventDefault**, voyez l'exemple qui suit :
 
 ```jsx
 // Approche fonctionnelle pour définir un composant
@@ -39,6 +41,7 @@ class Button extends React.Component{
   }
 
   click(){
+    // undefined
     console.log(this.props);
   }
 
@@ -115,17 +118,17 @@ class Button extends React.Component {
 
 ## 1. Exercice Compteur
 
-Créez deux compteurs (composants) qui se déclenchent à l'aide d'un bouton **start**. Le premier compteur s'incrémente de +1, le deuxième compteur s'incrémente de +2. Vous pouvez jouer avec les props des composants pour fixer la valeur de l'incrémentation, chaque composant aura ainsi sa propre configuration.
+1. Créez deux compteurs (composants) qui se déclenchent à l'aide d'un bouton **start**. 
 
-Associez pour chaque compteur un bouton stop qui permet d'arrêter le compteur correspondant.
+:rocket: Le premier compteur s'incrémente de +1, le deuxième compteur s'incrémente de +2. 
+
+Vous pouvez jouer avec les props des composants pour fixer la valeur de l'incrémentation, chaque composant aura ainsi sa propre configuration.
+
+1. Associez pour chaque compteur un bouton stop qui permet d'arrêter le compteur correspondant.
 
 Mettez une propriété **disabled** sur le start et le stop, disabled sera placé sur stop si on n'a pas appuyé sur start et réciproquement.
 
-Options possibles à notre exercice
+1. Les compteurs doivent tous s'arrêter lorsqu'ils atteignent 20, vous pouvez soit tout ré-initialiser, soit arrêter le compteur et laisser la valeur la valeur 20 affichée. 
 
-- Les compteurs doivent tous s'arrêter lorsqu'ils atteignent 20, vous pouvez soit tout ré-initialiser, soit arrêter le compteur et laisser la valeur la valeur 20 affichée. 
-
-- Si vous avez le temps développer un compteur cyclique et un compteur binaire.
-
-<!-- ![Counter](../images/button_counter.png) -->
+1. Développez un compteur cyclique et un compteur binaire.
 
