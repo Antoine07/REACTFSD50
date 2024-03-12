@@ -1,5 +1,9 @@
 # Challenge
 
+## Partie 0 
+
+Révisez ce que nous avons vu, demain on vous posera des questions sous forme d'un QCM.
+
 ## Partie 1
 
 Pour ce challenge vous utiliserez un fichier unique index.html en important l'ensemble des dépendances.
