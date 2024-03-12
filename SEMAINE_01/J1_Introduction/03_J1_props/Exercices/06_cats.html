@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <style>
+        .special {
+            margin-top: 20%;
+            text-align: center;
+            height: 50px;
+            line-height: 20px;
+        }
+
+        .firtletter::first-letter {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .main {
+            margin: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const catsData = [
+            { name: 'Whiskers', age: 3, color: 'Gray and White' },
+            { name: 'Luna', age: 2, color: 'Black' },
+            { name: 'Simba', age: 4, color: 'Orange' },
+            { name: 'Midnight', age: 1, color: 'Black' },
+            { name: 'Bella', age: 5, color: 'Tabby' },
+            { name: 'Gizmo', age: 2, color: 'Gray' },
+            { name: 'Nala', age: 3, color: 'Beige' },
+            { name: 'Oliver', age: 4, color: 'White and Brown' },
+            { name: 'Cleo', age: 2, color: 'Calico' },
+            { name: 'Max', age: 6, color: 'Tabby' },
+            { name: 'Bob', age: 6, color: 'Tabby' },
+        ];
+        const ages = catsData.map(c => c.age);
+
+        // tableau de correspondances des couleurs
+        const colors = {
+            'Gray and White': 'gray',
+            'Black': 'black',
+            'Orange': 'orange',
+            'Tabby': 'brown',
+            'Gray': 'gray',
+            'Beige': 'beige',
+            'White and Brown': 'brown',
+            'Calico': 'orange'
+        };
+
+        const Cat = (props) => {
+            const { name, color } = props;
+
+            return (
+                <p className="firtletter">
+                    <span style={{color: colors[color]}} >{name[0]}</span>{name.slice(1)}
+                </p>
+            )
+        }
+
+        const App = (props) => {
+            
+            const catAgeMax = Math.max(...ages);
+            const catAgeMin = Math.min(...ages)
+
+            return (
+                <div className="container " >
+                    <h2>Le chat ou les chats le plus vieux </h2>
+                    {props.cats.filter(c => c.age == catAgeMax).map((c, i) => (
+                        <p key={i} >{c.name}</p>
+                    ))}
+                    <h2>Le chat ou les chats le plus jeune(s) </h2>
+                    {props.cats.filter(c => c.age == catAgeMin).map((c, i) => (
+                        <p key={i} >{c.name}</p>
+                    ))}
+                    <div className="main">
+                        <h2>Liste de tous les chats</h2>
+                        {props.cats.map((c, i) => <Cat key={i} {...c} />)}
+                    </div>
+                </div >
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App cats={catsData} />)
+    </script>
+</body>
+
+</html>
