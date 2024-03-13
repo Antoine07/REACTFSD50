@@ -28,7 +28,34 @@ const numbers = [
 
 1. Créez un bouton order pour ordonner la liste de manière croissante, puis décroissante au click.
 
+1. Créez un bouton shuffle qui mélange les mots de la phrase.
+
 ## Partie 3 Facultative
 
 1. Reprendre dans un fichier à part l'exercice précédent et affichez toutes les secondes les valeurs du tableau `numbers` ci-dessus, une fois les valeurs affichées, recommencez de manière cyclique. 
 
+## Partie 4 (découverte)
+
+1. Définissez un state phrase `const [phrase, setPhrase] = React.useState('')`
+
+1. Créez un bouton **add** phrase qui ajoute la phrase à un tableau.
+
+1. Mémorisez la phrase ci-dessous et affichez la dans la page.
+
+```txt
+Malheur à ceux qui se contentent de peu.
+```
+
+Comment faire : utilisez un champ input pour récupérer la phrase.
+
+```js
+// dans votre composant 
+
+const handleChange = e => {
+  const { value } = e.target
+  // TODO set la phrase dans le state phrase
+}
+
+// le champ input est totalement contrôler par React avec le handleChange et la value 
+<input type="text" onChange={handleChange} value={phrase} name="phrase" />
+```
