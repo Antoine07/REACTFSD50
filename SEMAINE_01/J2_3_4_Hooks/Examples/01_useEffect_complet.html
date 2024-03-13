@@ -19,34 +19,48 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
+
+        const Home = (props) => {
+            const [count, setCount] = React.useState(0)
+
+            return (
+                <React.Fragment>
+                    <button onClick={() => setCount(count + 1)}>Count + 1 </button>
+                    {/* 
+                        DEMONTAGE DU COMPOSANT DANS LE DOM ==> dans le useEffect la fonction de démontage est exécutée 
+                    */}
+                    {count == 0 && <App />}
+                </React.Fragment>
+            )
+        }
+
         const App = (props) => {
             const [count, setCount] = React.useState(0)
-            const [count2, setCount2] = React.useState(0)
-
+           
             const handleCount = e => {
                 setCount( count + 1 )
             }
 
-            const handleCount2 = e => {
-                setCount2( count2 + 1 )
-            }
-
             React.useEffect(() => {
-                console.log(count, Math.random())
-            }, [count]);
+                const interval = setInterval( () => console.log(count, Math.random() ) , 1000 )
+
+                return () => {
+                    console.log('DEMONTAGE')
+                    clearInterval(interval)
+                }
+            }, []); // 
 
 
             return (
                 <React.Fragment>
-                    <p>Hello : { count } - { count2 }</p>
+                    <p>Hello : { count } </p>
                     <button onClick={handleCount}>Count + 1 </button>
-                    <button onClick={handleCount2}>Count + 1 </button>
                 </React.Fragment>
             )
         }
 
         ReactDOM.render(
-            <App />,
+            <Home />,
             document.getElementById('root')
         );
     </script>
