@@ -6,7 +6,7 @@ Révisez ce que nous avons vu, demain on vous posera des questions sous forme d'
 
 ## Partie 1
 
-Pour ce challenge vous utiliserez un fichier unique index.html en important l'ensemble des dépendances (liens).
+Pour ce challenge vous utiliserez un fichier unique 01_challenge.html en important l'ensemble des dépendances (liens).
 
 :rocket: Utilisez le tableau suivant
 
@@ -28,7 +28,6 @@ const numbers = [
 
 1. Créez un bouton order pour ordonner la liste de manière croissante, puis décroissante au click.
 
-1. Créez un bouton shuffle qui mélange les mots de la phrase.
 
 ## Partie 3 Facultative
 
