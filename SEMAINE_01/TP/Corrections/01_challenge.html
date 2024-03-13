@@ -67,6 +67,25 @@
                 19, 8, 17, 1, 9, 7
         ]
 
+        function TimeNumber({num}){
+              const [number, setNumber] = React.useState(0)
+              const [count, setCount] = React.useState(0)
+
+            // le rendu n'est pas fait car React fonctionne avec un DOM virtuel et des méthodes spécifiques pour rafraichir le rendu des composants 
+            setTimeout(() => {
+                const c = ( count + 1 ) % num.length
+                setCount( c )
+                setNumber(num[c])
+                console.log(num)
+            }, 1000)
+
+            return (
+                <React.Fragment>
+                   {number}
+                </React.Fragment>
+            )
+        }
+
         function Clock(props) {
             // Hook qui permet de modifier une variable de type state avec un re-render
             const [timer, setTimer] = React.useState(new Date)
@@ -116,6 +135,7 @@
             return (
                 <Layout className="main" >
                     <p><Clock /></p>
+                    <p>Number : <TimeNumber num={numbers} /></p>
                     {numbers.length > 0 && (
                         <div className="main-list">
                             <ul className="number">
