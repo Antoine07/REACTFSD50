@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+         const numbers = [
+                4, 14, 20, 6, 11, 12, 13,
+                5, 16, 10, 3, 15, 2, 18,
+                19, 8, 17, 1, 9, 7
+        ]
+
+        const App = ({num}) => {
+            const [count, setCount] = React.useState(0);
+            const [numbers, setNumbers] = React.useState(num || []);
+
+            React.useEffect(() => {
+
+                if(count === 10) {
+                    const newNumbers = [ ...numbers ]
+                    newNumbers.sort(_ => Math.random() - .5 )
+                    setNumbers(newNumbers)
+                }
+               
+                return () => {
+                  if(count >= 15) setCount( 0 )
+                }
+            }, [count]);
+
+            return (
+                <div>
+                    <p>{count}</p>
+                    <button onClick={() => setCount(count + 1)}>Count + 1</button>
+                    {numbers.length > 0 && (
+                        <ul>
+                            {numbers.map((number, i) => <li key={i}>{number}</li> )}
+                        </ul>
+                    )}
+                </div>
+            )
+        }
+
+        ReactDOM.render(
+            <App num={numbers} />,
+            document.getElementById('root')
+        );
+    </script>
+    </script>
+</body>
+
+</html>
