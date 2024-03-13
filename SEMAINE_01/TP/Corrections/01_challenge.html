@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .main-list, .center {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 80%; 
+            margin: 0 auto; 
+            background-color: #f0f0f0; 
+            padding: 20px; 
+            font-size: 1.5em;
+        }
+
+        .number{
+            list-style-type: none; /* Supprime les puces par défaut de la liste */
+            padding: 0; /* Supprime les marges internes */
+            margin: 0 auto; /* Centre la liste horizontalement */
+            display: inline-block; /* Permet à la liste de se centrer correctement */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const numbers = [
+                4, 14, 20, 6, 11, 12, 13,
+                5, 16, 10, 3, 15, 2, 18,
+                19, 8, 17, 1, 9, 7
+        ]
+
+        function Clock(props) {
+            // Hook qui permet de modifier une variable de type state avec un re-render
+            const [timer, setTimer] = React.useState(new Date)
+
+            // le rendu n'est pas fait car React fonctionne avec un DOM virtuel et des méthodes spécifiques pour rafraichir le rendu des composants 
+            setTimeout(() => {
+                // modifie l'état du state timer => React si l'état de la variable change exécute un re-render
+                setTimer(new Date)
+            }, 1000)
+
+            return (
+                <React.Fragment>
+                    Horologe: {timer.toLocaleTimeString()} 
+                </React.Fragment>
+            )
+        }
+
+        function App({ num }) {
+            const [phrase, setPhrase] = React.useState('')
+            const [phrases, setPhrases] = React.useState([])
+
+            const [numbers, setNumbers] = React.useState(num)
+            const [order, setOrder] = React.useState(1)
+            // state ...
+          
+            const handleChange = e => {
+                const { value } = e.target;
+                setPhrase(value)
+            }
+
+            const handleAdd =  () => {
+                
+                if(phrase.trim()) {
+                    setPhrase('')
+                    const newPhrases = phrases.map(p => p ) // nouvelle référence
+                    newPhrases.push(phrase)
+                    setPhrases(newPhrases)
+                }
+            }
+
+            const handleOrder = e => {
+                const newNumbers = numbers.map(n => n).sort((a, b) => order * (a - b) )
+                setNumbers( newNumbers )
+                setOrder( -order )
+            }
+
+            return (
+                <Layout className="main" >
+                    <p><Clock /></p>
+                    {numbers.length > 0 && (
+                        <div className="main-list">
+                            <ul className="number">
+                                {numbers.map((number, i) =>(<li key={i}>{number}</li>)) }
+                            </ul>
+                            <p><button onClick={handleOrder}>{order > 0 ? 'croissant' : 'décroissant'}</button></p>
+                        </div>
+                    )}
+                        
+                    <div className="center">
+                        <p><input type="text" onChange={handleChange} value={phrase} name="phrase" /></p>
+                        <span>{phrase}</span>
+                        <p><button onClick={handleAdd}>Add phrase</button></p>
+                    </div>
+                    {phrases.length > 0 && (
+                        <div className="main-list">
+                            <ul className="number">
+                                {phrases.map((p, i) =>(<li key={i}>{p}</li>)) }
+                            </ul>
+                        </div>
+                    )}
+                    
+                </Layout>
+            )
+        }
+
+        function Layout({ children }) {
+
+            return (
+                <div className="content">
+                    {/*Composant composition à l'aide des props*/}
+                    {children}
+                    <footer>
+                        <p>Copy right</p>
+                    </footer>
+                </div>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <App num={numbers} />
+        );
+    </script>
+</body>
+
+</html>
