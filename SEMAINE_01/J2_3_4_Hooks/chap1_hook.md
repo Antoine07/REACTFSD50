@@ -323,12 +323,3 @@ Num1 : [2]  Num2 : [15] <--  deux champs texte pour saisir vos nombres
 2. Affichez un message de chargement pendant que les données sont récupérées.
 3. Affichez un message d'erreur si la récupération des données échoue.
 4. Affichez les données récupérées sous forme de liste d'utilisateurs dans le composant. Chaque élément de la liste doit afficher le nom de l'utilisateur en gras suivi de son adresse e-mail entre parenthèses.
-5. Assurez-vous que le composant `UsersList` peut être utilisé dans d'autres composants en exportant le composant à la fin du fichier.
-
-**Bonus (optionnel) :**
-- Ajoutez une fonctionnalité de pagination pour afficher un nombre limité d'utilisateurs par page.
-- Ajoutez une mise en forme CSS pour améliorer l'apparence de la liste des utilisateurs.
-
----
-
-Cet exercice permettra aux apprenants de pratiquer l'utilisation de `fetch` dans un composant React, ainsi que la gestion des états et l'affichage des données récupérées.
