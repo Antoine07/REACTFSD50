@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+
+        /**
+         * Composition <Layout> ICI d'autres composants ... </Layout>
+        */
+        const Layout = ({ children }) => {
+
+            return (
+                <div className="bg-blue-100 flex items-center justify-center h-screen">
+                    <div className="bg-pink-200 p-8 rounded-lg">
+                        {children}
+                    </div>
+                </div>
+            )
+        }
+
+        const initialeState =
+        {
+            populations:
+                [
+                    { "id": 0, "name": "Alan" },
+                    { "id": 1, "name": "Albert" },
+                    { "id": 2, "name": "Jhon" },
+                    { "id": 3, "name": "Brice" },
+                    { "id": 4, "name": "Alexendra" },
+                    { "id": 5, "name": "Brad" },
+                    { "id": 6, "name": "Carl" },
+                    { "id": 7, "name": "Dallas" },
+                    { "id": 8, "name": "Dennis" },
+                    { "id": 9, "name": "Edgar" },
+                    { "id": 10, "name": "Erika" },
+                    { "id": 11, "name": "Isaac" },
+                    { "id": 12, "name": "Ian" },
+                    { "id": 13, "name": "Issa" }
+                ],
+                order : 1
+        }
+
+
+        const reducer = (state, action) => {
+            let populations = null;
+            switch (action.type) {
+
+                case 'LEN_NAME':
+                    // on fait une copie du tableau
+                    populations = [...state.populations]
+                    for (const pop of populations) pop.len = pop.name.length;
+
+                    return { ...state, populations };
+
+                case 'UPPER_NAME':
+                    // on fait une copie du tableau
+                    populations = [...state.populations]
+                    for (const pop of populations) pop.name = pop.name.toUpperCase();
+
+                    return { ...state, populations };
+
+                case 'LOWER_NAME':
+                    // on fait une copie du tableau
+                    populations = [...state.populations]
+                    for (const pop of populations) pop.name = pop.name.toLowerCase();
+
+                    return { ...state, populations };
+
+                case 'ORDER':
+                    // on fait une copie du tableau
+                    populations = [...state.populations]
+                    // state.order change l'ordre à chaque fois que l'on clique sur le dispatch
+                    // par rapport au signe de la clé order dans le store
+                    populations.sort((p1, p2) => state.order * (p1.name.length - p2.name.length))
+
+                    return { 
+                        ...state, 
+                        populations, 
+                        order : -1 * state.order 
+                    };
+                default:
+                    return state;
+            }
+        }
+
+        const App = (props) => {
+            const [state, dispatch] = React.useReducer(reducer, initialeState)
+            const { populations } = state;
+            const classes = [
+                "bg-green-500",
+                "hover:bg-green-600",
+                "text-white",
+                "font-bold",
+                " py-2",
+                "px-4 ",
+                "rounded-full",
+                "mt-4"
+            ]
+            return (
+                <Layout>
+                    <h1>useReducer</h1>
+                    <button
+                        className={classes.join(" ")}
+                        onClick={() => dispatch({ type: "LEN_NAME" })}
+                    >Len name</button>
+
+                    <button
+                        className={classes.join(" ")}
+                        onClick={() => dispatch({ type: "UPPER_NAME" })}
+                    >Upper Case</button>
+
+                    <button
+                        className={classes.join(" ")}
+                        onClick={() => dispatch({ type: "LOWER_NAME" })}
+                    >Lower Case</button>
+
+                    <button
+                        className={classes.join(" ")}
+                        onClick={() => dispatch({ type: "ORDER" })}
+                    >Order populations</button>
+
+                    <ul>
+                        {populations.map(person => {
+
+                            return <li key={person.id}>
+                                - Name : {person.name}
+                                {person.len ? `- Length ${person.len} ` : null}
+                            </li>
+                        })}
+                    </ul>
+                </Layout>
+            )
+        }
+
+        const app = ReactDOM.createRoot(root);
+        app.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        );
+
+    </script>
+</body>
+
+</html>

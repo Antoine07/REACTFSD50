@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+      .calculator {
+            width: 250px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            border: none;
+            background-color: #eee;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #ddd;
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: right;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const initialState = {
+            users : [],
+            isLoading : true,
+            error : ''
+        }
+
+        const url_api = 'https://jsonplaceholder.typicode.com'
+        const waiting =  (m) => ( new Promise( resolve => setTimeout(resolve, m ) ) )
+
+        function reducer(state, action){
+            switch(action.type){
+
+                case 'users':
+                    const users = action.users
+                    return {
+                        ...state,
+                        users 
+                    }
+                case 'error':
+
+                    return {
+                        ...state,
+                        error : action.error
+                    }
+                case 'load':
+
+                    return {
+                        ...state,
+                        isLoading : action.isLoading
+                    }
+
+                throw Error('Unknown action: ' + action.type);
+            }
+        }
+
+        function App(props) {
+            const [state, dispatch] = React.useReducer(reducer, initialState) 
+            const { isLoading, users, error } = state
+ 
+            React.useEffect(() => {
+                // dans le useEffect c'est que l'on peut mettre une promesse
+                const fetchUsers = async () => {
+                    try{
+                        const response = await fetch(`${url_api}/users`)
+                        if( !response.ok ) throw new Error('Erreur lors de la récupération des données')
+                        
+                        const users = await response.json()
+
+                        const r = await waiting(1000)
+                        dispatch({ type : 'users' , users })
+
+                    }catch(error){
+                        dispatch({type: 'error', error : error})
+                    }finally{
+                        dispatch({ type : 'load', isLoading : false })
+                    }
+                }
+                // on exécute la promesse 
+                fetchUsers()
+
+            }, [])
+
+            return (
+                <Layout >
+                {error && <p>{error}</p> }
+                  { isLoading ? <p>loading ...</p> : (
+                    <ul>
+                        {users.map((user, i) => <li key={i}>{user.name}</li> )}
+                    </ul>
+                  ) }
+
+                </Layout>
+            )
+        }
+
+        function Layout({ children }) {
+
+            return (
+                <div className="calculator">
+                    {children}
+                </div>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <App  />
+        );
+    </script>
+</body>
+
+</html>
