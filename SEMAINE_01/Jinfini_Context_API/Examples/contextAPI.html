@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const initialState = {
+            posts: ['a', 'b', 'c', 'd']
+        }
+
+        const root = document.getElementById('root')
+
+        function reducer(state, action) {
+            switch (action.type) {
+                case 'add':
+                    return {
+                        ...state,
+                        posts: state.posts.concat(state.value),
+                        value: ''
+                    }
+                case 'value':
+                    return {
+                        ...state,
+                        value: action.value
+                    }
+            }
+            throw Error('Unknown action: ' + action.type);
+        }
+
+        // création du contexte
+        const PostContext = React.createContext();
+
+        // Provider qui contextualise le reducer avec le state et celui ci sera accessible dans l'arbre en totalilité ou partiellement
+        const PostProvider = ({ children }) => {
+            const [state, dispatch] = React.useReducer(reducer, initialState);
+
+            return (
+                <PostContext.Provider value={[state, dispatch]}>
+                    {children}
+                </PostContext.Provider>
+            );
+        };
+
+        function App(props) {
+
+            return (
+                <div>
+                    <Post />
+                </div>
+            )
+        }
+
+        function Post(props) {
+            const [state, dispatch] = React.useContext(PostContext);
+
+            return (
+                <React.Fragment>
+                    <ul>
+                        {state.posts.map((post, i) => <li key={i}>{post}</li>)}
+                    </ul>
+                    <Form />
+                </React.Fragment>
+            )
+        }
+
+        function Form(props) {
+            const [state, dispatch] = React.useContext(PostContext);
+
+            const handleChange = e => {
+                dispatch({ type: 'value', value: e.target.value })
+            }
+
+            const handleAdd = e => {
+                if (state.value) dispatch({ type: 'add' })
+            }
+
+            return (
+                <div>
+                    <p><input onChange={handleChange} type="text" name="post" value={state.value} /></p>
+                    <p><button onClick={handleAdd}>Add</button></p>
+                </div>
+            )
+        }
+
+
+        ReactDOM.createRoot(root).render(
+            <PostProvider>
+                <App />
+            </PostProvider>
+        );
+    </script>
+</body>
+
+</html>
