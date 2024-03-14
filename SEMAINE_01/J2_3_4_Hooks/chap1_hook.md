@@ -317,9 +317,9 @@ Num1 : [2]  Num2 : [15] <--  deux champs texte pour saisir vos nombres
 **Instructions :**
 
 1. Créez un nouveau composant React nommé `UsersList`.
-2. Dans ce composant, utilisez les hooks d'état `useReducer` et `useEffect` pour gérer l'état des données, le chargement et les erreurs.
-3. Utilisez `fetch` dans le `useEffect` pour récupérer les données sur les utilisateurs à partir de l'API JSONPlaceholder (URL : https://jsonplaceholder.typicode.com/users).
+1. Dans ce composant, utilisez les hooks d'état `useReducer` et `useEffect` pour gérer l'état des données, le chargement et les erreurs.
+1. Utilisez `fetch` dans le `useEffect` pour récupérer les données sur les utilisateurs à partir de l'API JSONPlaceholder (URL : https://jsonplaceholder.typicode.com/users).
 1. Mettez à jour l'état avec les données récupérées.
-2. Affichez un message de chargement pendant que les données sont récupérées.
-3. Affichez un message d'erreur si la récupération des données échoue.
-4. Affichez les données récupérées sous forme de liste d'utilisateurs dans le composant. Chaque élément de la liste doit afficher le nom de l'utilisateur en gras suivi de son adresse e-mail entre parenthèses.
+1. Affichez un message de chargement pendant que les données sont récupérées.
+1. Affichez un message d'erreur si la récupération des données échoue.
+1. Affichez les données récupérées sous forme de liste d'utilisateurs dans le composant. Chaque élément de la liste doit afficher le nom de l'utilisateur en gras suivi de son adresse e-mail entre parenthèses.
