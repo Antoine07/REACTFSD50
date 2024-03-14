@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- babel => compilation du JSX -->
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        // source de vérité
+        const intialState = {
+            number: '',
+            letter: '',
+            list: []
+        }
+
+        function reducer(state, action) {
+            switch (action.type) {
+                case 'number':
+                    return {
+                        ...state, // copie pour faire un diff
+                        number: action.value
+                    }
+
+                case 'letter':
+                    return {
+                        ...state,
+                        letter: action.value
+                    }
+
+                case 'add':
+                    // copie profonde pour éviter les effets de bord
+                    // on pense également à copier chaque référence.
+                    const list = state.list.map(c => ({ ...c }))
+                    list.push({letter : state.letter, number : state.number })
+
+                    return {
+                        ...state,
+                        list, // crée la clé et la valeur en même temps
+                        number: '',
+                        letter: ''
+                    }
+            }
+            throw Error('Unknown action: ' + action.type);
+        }
+
+        function App(props) {
+            const [state, dispatch] = React.useReducer(reducer, intialState)
+
+            const handleSubmit = e => {
+                e.preventDefault()
+                dispatch({ type: 'add' })
+            }
+
+            const handleChange = e => {
+                const { name, value } = e.target 
+                dispatch({ type : name,  value  })
+            }
+
+            return (
+                <Layout >
+                    <form onSubmit={handleSubmit}>
+                        <p>Number:<input type="text" onChange={handleChange} name="number" value={state.number}/></p>
+                        <p>Letter:<input type="text" onChange={handleChange} name="letter" value={state.letter}/></p>
+                        <p><button>ADD</button></p>
+                    </form>
+                    {state.list  && (
+                        <ul>
+                            {state.list.map((l, i) => <li key={i} >{l.number} {l.letter}</li>)}
+                        </ul>
+                    )}
+                </Layout>
+            )
+        }
+
+        function Layout({ children }) {
+
+            return (
+                <div className="main">
+                    {children}
+                </div>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <App />
+        );
+    </script>
+</body>
+
+</html>
