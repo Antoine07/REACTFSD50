@@ -39,6 +39,7 @@
             border-radius: 5px;
             font-size: 20px;
             text-align: right;
+            min-height: 20px;
         }
     </style>
 </head>
@@ -46,6 +47,7 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
+        const operators = ['+', '*', '-', 'C', '=']
         const symbols = [
             '*',
             '7',
@@ -76,12 +78,14 @@
                         value : state.value +  action.value 
                     }
                 
+                case '-':
                 case '*':
                 case '+': {
                    
                     return {
                     ...state, 
-                        num1 : parseFloat( state.value ),
+                    // soit state.value = on saisit un nombre, soit on vient de faire une opération et on souhaite en faire une autre et on mémorise dans num1 la valeur
+                        num1 : parseFloat( state.value || state.result ), 
                         value : '',
                         symbol : action.type
                     };
@@ -93,6 +97,7 @@
 
                     if( state.symbol == '+' ) res = num2 + state.num1
                     if( state.symbol == '*' ) res = num2 * state.num1
+                    if( state.symbol == '-' ) res = state.num1 - num2
 
                     return {
                         ...state,
@@ -127,7 +132,7 @@
             )
         }
 
-        function App({ num }) {
+        function App({ symbols, operators }) {
             // state (comme un useState) , dispatch qui permet d'envoyer des actions (action.type, action.value) au reducer
             const [state, dispatch] = React.useReducer(reducer, initialState);
 
@@ -135,7 +140,7 @@
 
             const handleSymbol = symbol => {
 
-                if( symbol == '+' || symbol == '*' || symbol == '=' || symbol == 'C' ){
+                if( operators.includes(symbol) ){
                     dispatch({ type : symbol })
                     return;
                 }
@@ -161,7 +166,7 @@
         }
 
         ReactDOM.createRoot(document.getElementById('root')).render(
-            <App symbols={symbols} />
+            <App symbols={symbols} operators={operators} />
         );
     </script>
 </body>
