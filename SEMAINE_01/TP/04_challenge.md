@@ -51,7 +51,7 @@ Texte 2 :
 
 ## Partie facultative 
 
-Implémentez les fonctionnalités suivantes :
+Implémentez les fonctionnalités suivantes au moins une si vous avez le temps
 
 1. **Aperçu en direct du style** :
    - Ajoutez un aperçu en direct du texte avec le style sélectionné avant de valider le formulaire. Cela permettra à l'utilisateur de voir immédiatement l'effet de ses choix de style.
@@ -62,11 +62,5 @@ Implémentez les fonctionnalités suivantes :
 1. **Options de style supplémentaires** :
    - Ajoutez la possibilité pour l'utilisateur de définir la couleur du texte en plus du style de fond. Cela pourrait être réalisé à l'aide d'un sélecteur de couleurs.
 
-1. **Fonctionnalité de modification de texte** :
-   - Permettez à l'utilisateur de modifier un texte rendu existant en cliquant dessus. Cela ouvrirait un champ de texte pré-rempli avec le texte existant et les paramètres de style actuels, lui permettant de modifier et de valider les changements.
-
 1. **Options de personnalisation avancées** :
    - Offrez des options de personnalisation avancées telles que la police de caractères, l'espacement des caractères, l'alignement du texte, etc., pour permettre à l'utilisateur de personnaliser davantage l'apparence de son texte.
-
-1. **Mode sombre/lumineux** :
-   - Ajoutez un interrupteur pour activer un mode sombre ou lumineux dans l'interface utilisateur, offrant une expérience visuelle alternative en fonction des préférences de l'utilisateur.
